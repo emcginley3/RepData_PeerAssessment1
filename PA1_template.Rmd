@@ -5,8 +5,33 @@ output:
     keep_md: true
 ---
 
+## install dplyr package
+install.packages("dplyr")
+library(dplyr)
+  
+##install ggplot2 package
+install.packages("ggplot2")
+library(ggplot2)
 
 ## Loading and preprocessing the data
+## Unzip the activity.zip file before running read.csv
+## Set the working directory to the file location containing the activity.csv data set
+setwd('activity')
+## Load the data into a data frame
+stepData <- read.csv("activity.csv")
+## Remove missing (NA) values from the data
+nullData <- is.na(stepData$steps)
+cleanSteps <- stepData[!nullData,]
+## Calculate total number of steps taken per day
+d <- aggregate(steps ~ date, sum, data = cleanSteps)
+# Plot total number of steps taken per day
+# open device
+png(filename='totalDailySteps.png')
+hist(d$steps, breaks = d$date, main = "Total Steps per Day"", xlab = "Date", ylab = "Total Steps")
+
+  
+  #turn off device
+  dev.off()
 
 
 
